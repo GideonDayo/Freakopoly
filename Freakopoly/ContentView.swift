@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var p1Name = "Player 1"
     @State private var p1Pos = 0
     @State private var p1Money = 1500
+    //hi owen
     
     @State private var p2Name = "Player 2"
     @State private var p2Pos = 0
