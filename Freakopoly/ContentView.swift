@@ -11,7 +11,7 @@ struct ContentView: View {
     @State private var p1Name = "Player 1"
     @State private var p1Pos = 0
     @State private var p1Money = 1500
-    //hi owen
+    //hi owen hi gang
     
     @State private var p2Name = "Player 2"
     @State private var p2Pos = 0
@@ -22,13 +22,15 @@ struct ContentView: View {
     @State private var gameEnded = false
     @State private var message = ""
     
-    let board = [
+    let boardPlaces = [
         "Go", "Grand Glacier", "Rebels Roost", "Mount Olympus",
         "Fanum Tax", "Greasy Grove", "Coney Crossroads", "Frenzy Farm",
         "Creeky Compound", "Pleasant Piazza", "Diddys Mansion", "Lavish Lair",
         "Electric Company", "Shipwreck Shallows", "Fencing Fields", "Ruined Reels",
         "Chiraq", "Community Chest", "O-Block", "NYC Trenches"
     ]
+    
+    let treasureCards = ["Giant boulder found"] //ADD DESCRIPTIONS
     
     
     var body: some View {
@@ -57,8 +59,8 @@ struct ContentView: View {
                     .foregroundColor(.red)
             }
             
-            Text("\(p1Name) --- Position: \(board[p1Pos]) --- Money: $\(p1Money)")
-            Text("\(p2Name) --- Position: \(board[p2Pos]) --- Money: $\(p2Money)")
+            Text("\(p1Name) --- Position: \(boardPlaces[p1Pos]) --- Money: $\(p1Money)")
+            Text("\(p2Name) --- Position: \(boardPlaces[p2Pos]) --- Money: $\(p2Money)")
                 .padding()
         }
         .padding()
@@ -68,8 +70,8 @@ struct ContentView: View {
         dice = Int.random(in: 2...12)
         
         if turn == 1 {
-            p1Pos = (p1Pos + dice) % board.count
-            message = "\(p1Name) moved to \(board[p1Pos])"
+            p1Pos = (p1Pos + dice) % boardPlaces.count
+            message = "\(p1Name) moved to \(boardPlaces[p1Pos])"
             if p1Pos == 0 {
                 p1Money += 200
                 message += " and received $200 for passing Go!"
@@ -88,9 +90,9 @@ struct ContentView: View {
             
             
             
-            p2Pos = (p2Pos + dice) % board.count
+            p2Pos = (p2Pos + dice) % boardPlaces.count
             
-            message = "\(p2Name) moved to \(board[p2Pos])"
+            message = "\(p2Name) moved to \(boardPlaces[p2Pos])"
          
             
             
