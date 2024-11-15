@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+
+struct Setting: Identifiable {
+    let id = UUID()
+    var name: String
+    var isContacted = false
+}
+
 struct ContentView: View {
     @State private var p1Name = "Player 1"
     @State private var p1Pos = 0
@@ -34,8 +41,21 @@ struct ContentView: View {
     
     let treasureCards = ["Giant boulder found"] //ADD DESCRIPTIONS
     
+    @State private var settings = [ //settings
+            Setting(name: "Even Build"),
+            Setting(name: "Rent in Jail"),
+            Setting(name: "Mortgaging")
+        ]
     
     var body: some View {
+
+        List($settings) { $setting in
+            HStack{
+                Text(setting.name)
+                Toggle("Setting has been Changed", isOn: $setting.isContacted)
+                    .labelsHidden()
+            }
+        }
         VStack {
             Text("Fortnite Freakopoly")
                 .font(.largeTitle)
