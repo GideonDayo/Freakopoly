@@ -11,7 +11,7 @@ struct ContentView: View {
     @State private var p1Name = "Player 1"
     @State private var p1Pos = 0
     @State private var p1Money = 1500
-    //hi owen
+    //hi owen hi gang
     
     @State private var p2Name = "Player 2"
     @State private var p2Pos = 0
@@ -31,7 +31,9 @@ struct ContentView: View {
         "Electric Company", "Shipwreck Shallows", "Fencing Fields", "Ruined Reels",
         "Chiraq", "Community Chest", "O-Block", "NYC Trenches"
     ]
-    let treasureCards = ["Giant boulder found"]
+    
+    let treasureCards = ["Giant boulder found"] //ADD DESCRIPTIONS
+    
     
     var body: some View {
         VStack {
