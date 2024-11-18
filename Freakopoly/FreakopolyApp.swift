@@ -11,7 +11,7 @@ import SwiftUI
 struct FreakopolyApp: App {
     var body: some Scene {
         WindowGroup {
-            BoardView()
+            ContentView()
         }
     }
 }

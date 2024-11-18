@@ -15,6 +15,7 @@ struct Setting: Identifiable {
 }
 
 struct ContentView: View {
+    @State private var startingCash = 1500
     @State private var p1Name = "Player 1"
     @State private var p1Pos = 0
     @State private var p1Money = 1500
@@ -44,7 +45,9 @@ struct ContentView: View {
     @State private var settings = [ //settings
             Setting(name: "Even Build"),
             Setting(name: "Rent in Jail"),
-            Setting(name: "Mortgaging")
+            Setting(name: "Mortgaging"),
+            Setting(name: "Vacation Cash"),
+            Setting(name: "Auction")
         ]
     
     var body: some View {
@@ -56,6 +59,22 @@ struct ContentView: View {
                     .labelsHidden()
             }
         }
+        HStack{
+            Text("Enter Cash Amount:")
+            TextField("Enter Starting Cash:", value: $startingCash, format: .number)
+                .onSubmit{
+                    if(startingCash>3000){
+                        startingCash = 3000
+                    }
+                    if(startingCash<1000){
+                        startingCash = 1000
+                    }
+                    p1Money = startingCash
+                    p2Money = startingCash
+                }
+                .textFieldStyle(.roundedBorder)
+        }
+        .padding()
         VStack {
             Text("Fortnite Freakopoly")
                 .font(.largeTitle)
@@ -81,8 +100,8 @@ struct ContentView: View {
                     .foregroundColor(.red)
             }
             
-            Text("\(p1Name) --- Position: \(boardPlaces[p1Pos]) --- Money: $\(p1Money)")
-            Text("\(p2Name) --- Position: \(boardPlaces[p2Pos]) --- Money: $\(p2Money)")
+            Text("\(p1Name), Position: \(boardPlaces[p1Pos]), Money: $\(p1Money)")
+            Text("\(p2Name), Position: \(boardPlaces[p2Pos]), Money: $\(p2Money)")
                 .padding()
             Button(action: {
                     gameEnded = true
@@ -92,12 +111,13 @@ struct ContentView: View {
                         message = "\(p2Name) is out of money! Game over."
                     }
                 }, label: {
-                    Text("Bankrupt")
-                    .padding(1)
-                    .background(Color.red)
-                    .foregroundStyle(.white)
-                    .cornerRadius(10)
+                    ZStack{
+                        Text("Fibonacci")
+                            .foregroundStyle(.white)
+                    }
                 })
+            .padding()  .background(Color.red)  .foregroundColor(.white)
+            .cornerRadius(10)
         }
         .padding()
     }
