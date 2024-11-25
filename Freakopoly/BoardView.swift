@@ -8,38 +8,82 @@
 import SwiftUI
 
 struct BoardView: View {
-    @State var topHeight: [Int] = [90,80,80,80,80,80,80,80,80,100]
-    @State var count: Int = 0
+    // Constants for sizes
+    let cornerSize: CGFloat = 100
+    let sideWidth: CGFloat = 80
+    let sideHeight: CGFloat = 100
+    
     var body: some View {
-        ZStack{
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .foregroundStyle(.black)
-            HStack{
-                ForEach(0..<topHeight.count, id:\.self){index in
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width:90 ,height: Double(topHeight[index]))
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            
+            // The square board layout
+            VStack(spacing: -10) {
+                // Top row (horizontal)
+                HStack(spacing: 0) {
+                    BoardCellView(width: cornerSize, height: cornerSize) // top left
+                    ForEach(0..<8) { _ in
+                        BoardCellView(width: sideWidth, height: sideHeight) // horiz spaces
+                    }
+                    BoardCellView(width: cornerSize, height: cornerSize) // top right
+                }
+             
+                
+                // L  R Columns
+                HStack(spacing: 0) {
+                    VStack(spacing: -19) {
+                        ForEach(0..<8) { _ in
+                            BoardCellView(width: sideWidth, height: sideHeight)
+                                .rotationEffect(.degrees(90))// reg vert
+                        }
+                    }
                     
-//                    if(topHeight[index] == 100){
-//                            RoundedRectangle(cornerRadius:5)
-//                                .frame(width:100, height: Double(topHeight[index]))//figure out how to fix height as topHeight[]
-//                        VStack{
-//                            ForEach(topHeight, id:\.self){ value in
-//                                RoundedRectangle(cornerRadius:5)
-//                                    .frame(width:100, height: Double(topHeight[index]))//figure out how to fix height as topHeight[]
-//                            }
-//                        }
-//                    }else{
-//                            Rectangle()
-//                            .frame(width:100, height: 100)//figure out how to fix height as topHeight[]
-//                    }
+                    Spacer().frame(width: 675) // space between L & R
+                    
+                    VStack(spacing: -19) {
+                        ForEach(0..<8) { _ in
+                            BoardCellView(width: sideWidth, height: sideHeight)
+                                .rotationEffect(.degrees(90))//
+                        }
+                    }
+                }
+                
+                // Bottom row (horizontal)
+                HStack(spacing: 0) {
+                    BoardCellView(width: cornerSize, height: cornerSize) // bottom left
+                    ForEach(0..<8) { _ in
+                        BoardCellView(width: sideWidth, height: sideHeight) // bottom mid
+                    }
+                    BoardCellView(width: cornerSize, height: cornerSize) // bottom right
                 }
             }
+            .padding(100)
         }
-        Text("Hi")
     }
 }
 
-#Preview{
-    BoardView()
+
+
+
+struct BoardCellView: View {
+    let width: CGFloat
+    let height: CGFloat
+    
+    init(width: CGFloat, height: CGFloat? = nil) {
+        self.width = width
+        self.height = height ?? width // Default to square if height is not specified
+    }
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .frame(width: width, height: height)
+            .foregroundColor(.white)
+            .padding(1)
+    }
+    
+    struct BoardView_Previews: PreviewProvider {
+        static var previews: some View {
+            BoardView()
+        }
+    }
 }
