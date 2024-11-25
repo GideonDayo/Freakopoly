@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import Firebase
+import FirebaseFirestore
 
 struct Setting: Identifiable {
     let id = UUID()
@@ -60,6 +61,7 @@ struct ContentView: View {
             }
         }
         HStack{
+            
             Text("Enter Cash Amount:")
             TextField("Enter Starting Cash:", value: $startingCash, format: .number)
                 .onSubmit{
@@ -110,6 +112,15 @@ struct ContentView: View {
                     } else {
                         message = "\(p2Name) is out of money! Game over."
                     }
+                
+                //remove this later
+                let db = Firestore.firestore()
+//                db.collection("Test").document("1").setData(["name": "Hello, World!"])
+                
+                db.collection("UserData").document("4").setData(["name": "Hello, World!"])
+                
+                print("hi")
+                
                 }, label: {
                     ZStack{
                         Text("Fibonacci")
