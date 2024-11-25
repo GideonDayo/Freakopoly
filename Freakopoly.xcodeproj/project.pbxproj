@@ -6,13 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		87B590572CEB9C93008D345C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 87B590562CEB9C93008D345C /* FirebaseAnalytics */; };
-		87B590592CEB9C93008D345C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 87B590582CEB9C93008D345C /* FirebaseAuth */; };
-		87B5905B2CEB9C93008D345C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 87B5905A2CEB9C93008D345C /* FirebaseFirestore */; };
-		87B5905D2CEB9C93008D345C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 87B5905C2CEB9C93008D345C /* FirebaseStorage */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		7A68B5AD2CDE902F008DB83B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -36,30 +29,9 @@
 		7A68B5B62CDE902F008DB83B /* FreakopolyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreakopolyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		87B590532CEB9B07008D345C /* Exceptions for "Freakopoly" folder in "FreakopolyTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"GoogleService-Info.plist",
-			);
-			target = 7A68B5AB2CDE902F008DB83B /* FreakopolyTests */;
-		};
-		87B590542CEB9B07008D345C /* Exceptions for "Freakopoly" folder in "FreakopolyUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"GoogleService-Info.plist",
-			);
-			target = 7A68B5B52CDE902F008DB83B /* FreakopolyUITests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7A68B59D2CDE902D008DB83B /* Freakopoly */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				87B590532CEB9B07008D345C /* Exceptions for "Freakopoly" folder in "FreakopolyTests" target */,
-				87B590542CEB9B07008D345C /* Exceptions for "Freakopoly" folder in "FreakopolyUITests" target */,
-			);
 			path = Freakopoly;
 			sourceTree = "<group>";
 		};
@@ -80,10 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87B590572CEB9C93008D345C /* FirebaseAnalytics in Frameworks */,
-				87B5905D2CEB9C93008D345C /* FirebaseStorage in Frameworks */,
-				87B590592CEB9C93008D345C /* FirebaseAuth in Frameworks */,
-				87B5905B2CEB9C93008D345C /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,10 +112,6 @@
 			);
 			name = Freakopoly;
 			packageProductDependencies = (
-				87B590562CEB9C93008D345C /* FirebaseAnalytics */,
-				87B590582CEB9C93008D345C /* FirebaseAuth */,
-				87B5905A2CEB9C93008D345C /* FirebaseFirestore */,
-				87B5905C2CEB9C93008D345C /* FirebaseStorage */,
 			);
 			productName = Freakopoly;
 			productReference = 7A68B59B2CDE902D008DB83B /* Freakopoly.app */;
@@ -231,9 +195,6 @@
 			);
 			mainGroup = 7A68B5922CDE902D008DB83B;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				87B590552CEB9C93008D345C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7A68B59C2CDE902D008DB83B /* Products */;
 			projectDirPath = "";
@@ -622,40 +583,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		87B590552CEB9C93008D345C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.5.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		87B590562CEB9C93008D345C /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87B590552CEB9C93008D345C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		87B590582CEB9C93008D345C /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87B590552CEB9C93008D345C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		87B5905A2CEB9C93008D345C /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87B590552CEB9C93008D345C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		87B5905C2CEB9C93008D345C /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87B590552CEB9C93008D345C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7A68B5932CDE902D008DB83B /* Project object */;
 }
