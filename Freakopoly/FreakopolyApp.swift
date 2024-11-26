@@ -10,30 +10,28 @@ import FirebaseCore
 import Firebase
 import FirebaseFirestore
 
-//class AppDelegate: NSObject, NSApplicationDelegate {
-//    func applicationDidFinishLaunching(_ notification: Notification) {
-//        FirebaseApp.configure()
-//        print("app loaded")
-//    }
-//}
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        FirebaseApp.configure()
+        print("app loaded")
+    }
+}
 
 
 
 @main
 struct FreakopolyApp: App {
-//    @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    init() {
-        FirebaseApp.configure()
-        print("Firebase configured")
-    }
+//    init() {
+//        FirebaseApp.configure()
+//        print("Firebase configured")
+//    }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
-                    setupFirestore()
-                }
+
         }
     }
     

@@ -16,24 +16,30 @@ struct Setting: Identifiable {
 }
 
 struct ContentView: View {
-    @State private var startingCash = 1500
+    @State private var startingCash: Int = 1500
+    //player 1 data
     @State private var p1Name = "Player 1"
     @State private var p1Pos = 0
     @State private var p1Money = 1500
-    //hi owen hi gang
-    
+    //player 2 data
     @State private var p2Name = "Player 2"
     @State private var p2Pos = 0
     @State private var p2Money = 1500
-    
+    //game data
     @State private var roll1 = 0
     @State private var roll2 = 0
     @State private var turn = 1 // make  alt turns
     @State private var dice = 0
     @State private var gameEnded = false
-    @State private var message = ""
+    @State private var message = "" //displayed message
     
-    let boardPlaces = [
+    //sidebar
+    @State private var isSidebarVisible = false
+    @State private var isDarkMode = false
+    @State private var isNotificationsEnabled = true
+    @State private var isLocationAccessGranted = false
+       
+    let boardPlaces: [String] = [
         "Go", "Grand Glacier", "Rebels Roost", "Mount Olympus",
         "Fanum Tax", "Greasy Grove", "Coney Crossroads", "Frenzy Farm",
         "Creeky Compound", "Pleasant Piazza", "Diddys Mansion", "Lavish Lair",
@@ -41,9 +47,9 @@ struct ContentView: View {
         "Chiraq", "Community Chest", "O-Block", "NYC Trenches"
     ]
     
-    let treasureCards = ["Giant boulder found"] //ADD DESCRIPTIONS
+    let treasureCards: [String] = ["Giant boulder found"] //ADD DESCRIPTIONS
     
-    @State private var settings = [ //settings
+    @State private var settings: [Setting] = [ //settings
             Setting(name: "Even Build"),
             Setting(name: "Rent in Jail"),
             Setting(name: "Mortgaging"),
@@ -52,87 +58,102 @@ struct ContentView: View {
         ]
     
     var body: some View {
-
-        List($settings) { $setting in
-            HStack{
-                Text(setting.name)
-                Toggle("Setting has been Changed", isOn: $setting.isContacted)
-                    .labelsHidden()
-            }
-        }
         HStack{
-            
-            Text("Enter Cash Amount:")
-            TextField("Enter Starting Cash:", value: $startingCash, format: .number)
-                .onSubmit{
-                    if(startingCash>3000){
-                        startingCash = 3000
+            ZStack{ //Sidebar button
+                Button(action: {
+                    // Toggle Sidebar visibility
+                    withAnimation {
+                        isSidebarVisible.toggle()
                     }
-                    if(startingCash<1000){
-                        startingCash = 1000
-                    }
-                    p1Money = startingCash
-                    p2Money = startingCash
+                }) {
+                    Text(isSidebarVisible ? "Hide Sidebar" : "Show Sidebar") //This is the text for the sidebar view
+                        .font(.title)
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-                .textFieldStyle(.roundedBorder)
-        }
-        .padding()
-        VStack {
-            Text("Fortnite Freakopoly")
-                .font(.largeTitle)
-                .bold()
-            
-            if !gameEnded {
-                let currentPlayerName = turn == 1 ? p1Name : p2Name
-                Text("Turn: \(currentPlayerName)")
-                Text("Dice Roll: \(dice)")
-                Text(message)
-                
-                
-                Button("Roll Dice") {
-                    roll()
+                if isSidebarVisible {
+                    SidebarView(isSidebarVisible: $isSidebarVisible, isDarkMode: $isDarkMode, isNotificationsEnabled: $isNotificationsEnabled, isLocationAccessGranted: $isLocationAccessGranted, settings: $settings)
+                        .transition(.move(edge: .leading)) // Slide-in transition
+                        .zIndex(1) // Bring sidebar in front of main content
                 }
-                .padding()  .background(Color.green)  .foregroundColor(.white)
-                .cornerRadius(10)
             }
-            
-            else {
-                Text(message)
-                    .font(.title)
-                    .foregroundColor(.red)
-            }
-            
-            Text("\(p1Name), Position: \(boardPlaces[p1Pos]), Money: $\(p1Money)")
-            Text("\(p2Name), Position: \(boardPlaces[p2Pos]), Money: $\(p2Money)")
+            VStack{
+                HStack{
+                    
+                    Text("Enter Cash Amount:")
+                    TextField("Enter Starting Cash:", value: $startingCash, format: .number)
+                        .onSubmit{
+                            if(startingCash>3000){
+                                startingCash = 3000
+                            }
+                            if(startingCash<1000){
+                                startingCash = 1000
+                            }
+                            p1Money = startingCash
+                            p2Money = startingCash
+                        }
+                        .textFieldStyle(.roundedBorder)
+                }
                 .padding()
-            Button(action: {
-                    gameEnded = true
-                    if(turn == 1){
-                        message = "\(p1Name) is out of money! Game over."
-                    } else {
-                        message = "\(p2Name) is out of money! Game over."
+                VStack {
+                    Text("Fortnite Freakopoly")
+                        .font(.largeTitle)
+                        .bold()
+                    
+                    if !gameEnded {
+                        let currentPlayerName = turn == 1 ? p1Name : p2Name
+                        Text("Turn: \(currentPlayerName)")
+                        Text("Dice Roll: \(dice)")
+                        Text(message)
+                        
+                        
+                        Button("Roll Dice") {
+                            roll()
+                        }
+                        .padding()  .background(Color.green)  .foregroundColor(.white)
+                        .cornerRadius(10)
                     }
-                
-                //remove this later
-                let db = Firestore.firestore()
-//                db.collection("Test").document("1").setData(["name": "Hello, World!"])
-                
-                db.collection("UserData").document("4").setData(["name": "Hello, World!"])
-                
-                print("hi")
-                
-                }, label: {
-                    ZStack{
-                        Text("Fibonacci")
-                            .foregroundStyle(.white)
+                    
+                    else {
+                        Text(message)
+                            .font(.title)
+                            .foregroundColor(.red)
                     }
-                })
-            .padding()  .background(Color.red)  .foregroundColor(.white)
-            .cornerRadius(10)
+                    
+                    Text("\(p1Name), Position: \(boardPlaces[p1Pos]), Money: $\(p1Money)")
+                    Text("\(p2Name), Position: \(boardPlaces[p2Pos]), Money: $\(p2Money)")
+                        .padding()
+                    Button(action: {
+                        gameEnded = true
+                        if(turn == 1){
+                            message = "\(p1Name) is out of money! Game over."
+                        } else {
+                            message = "\(p2Name) is out of money! Game over."
+                        }
+                        
+                        //remove this later
+//                        let db = Firestore.firestore()
+                        //                db.collection("Test").document("1").setData(["name": "Hello, World!"])
+                        
+//                        db.collection("UserData").document("4").setData(["name": "Hello, World!"])
+                        
+                        print("hi")
+                        
+                    }, label: {
+                        ZStack{
+                            Text("Fibonacci")
+                                .foregroundStyle(.white)
+                        }
+                    })
+                    .padding()  .background(Color.red)  .foregroundColor(.white)
+                    .cornerRadius(10)
+                }
+                .padding()
+            }
         }
-        .padding()
     }
-    
     func roll() {
         roll1 = Int.random(in: 1...6)
         roll2 = Int.random(in: 1...6)
@@ -197,9 +218,54 @@ struct ContentView: View {
         }
     }
 }
-
-
+struct SidebarView: View {
+    // Binding values from parent view
+    @Binding var isSidebarVisible: Bool
+    @Binding var isDarkMode: Bool
+    @Binding var isNotificationsEnabled: Bool
+    @Binding var isLocationAccessGranted: Bool
+    @Binding var settings: [Setting]
+    
+    var body: some View {
+        VStack {
+            // Close button to hide sidebar
+            Button(action: {
+                withAnimation {
+                    isSidebarVisible = false
+                }
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                    .padding()
+            }
+            Text("Settings")
+                .font(.system(size:40))
+                .underline()
+            // Settings Section with Toggles
+            Form {
+                List($settings) { $setting in
+                    HStack{
+                        Text(setting.name)
+                        Toggle("Setting has been Changed", isOn: $setting.isContacted)
+                            .labelsHidden()
+                    }
+                }
+            }
+            .frame(maxWidth: 300, maxHeight: 500)
+            .background(Color.gray.opacity(0.8))
+            .cornerRadius(10)
+            .padding()
+        }
+        .frame(width: 300)
+        .background(Color.gray)
+        .cornerRadius(10)
+        .foregroundColor(.white)
+        .edgesIgnoringSafeArea(.vertical)
+    }
+}
 
 #Preview{
     ContentView()
 }
+
