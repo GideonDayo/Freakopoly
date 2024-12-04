@@ -30,8 +30,7 @@ struct FreakopolyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-
+            GameCreationView(enteredCode: "", userName: "")
         }
     }
     

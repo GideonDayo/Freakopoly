@@ -1,0 +1,17 @@
+Current objectives in priority list
+
+
+-Rework dice logic
+-Make board positions link to players and fix logic (go only works if you land on it) -Evan
+-Finish board - Gideon
+-Make settings work -Owen
+-Codes/Lobbies -Owen
+
+
+connect firebase to everything{
+Codes
+Turns
+money
+make player positions link through firebase
+}
+

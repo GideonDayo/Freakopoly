@@ -33,12 +33,6 @@ struct ContentView: View {
     @State private var gameEnded = false
     @State private var message = "" //displayed message
     
-    //sidebar
-    @State private var isSidebarVisible = false
-    @State private var isDarkMode = false
-    @State private var isNotificationsEnabled = true
-    @State private var isLocationAccessGranted = false
-       
     let boardPlaces: [String] = [
         "Go", "Grand Glacier", "Rebels Roost", "Mount Olympus",
         "Fanum Tax", "Greasy Grove", "Coney Crossroads", "Frenzy Farm",
@@ -49,36 +43,7 @@ struct ContentView: View {
     
     let treasureCards: [String] = ["Giant boulder found"] //ADD DESCRIPTIONS
     
-    @State private var settings: [Setting] = [ //settings
-            Setting(name: "Even Build"),
-            Setting(name: "Rent in Jail"),
-            Setting(name: "Mortgaging"),
-            Setting(name: "Vacation Cash"),
-            Setting(name: "Auction")
-        ]
-    
     var body: some View {
-        HStack{
-            ZStack{ //Sidebar button
-                Button(action: {
-                    // Toggle Sidebar visibility
-                    withAnimation {
-                        isSidebarVisible.toggle()
-                    }
-                }) {
-                    Text(isSidebarVisible ? "Hide Sidebar" : "Show Sidebar") //This is the text for the sidebar view
-                        .font(.title)
-                        .padding()
-                        .background(Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                if isSidebarVisible {
-                    SidebarView(isSidebarVisible: $isSidebarVisible, isDarkMode: $isDarkMode, isNotificationsEnabled: $isNotificationsEnabled, isLocationAccessGranted: $isLocationAccessGranted, settings: $settings)
-                        .transition(.move(edge: .leading)) // Slide-in transition
-                        .zIndex(1) // Bring sidebar in front of main content
-                }
-            }
             VStack{
                 HStack{
                     
@@ -153,7 +118,6 @@ struct ContentView: View {
                 .padding()
             }
         }
-    }
     func roll() {
         roll1 = Int.random(in: 1...6)
         roll2 = Int.random(in: 1...6)
@@ -216,52 +180,6 @@ struct ContentView: View {
         } else if turn == 2 && roll1 != roll2{
             turn = 1
         }
-    }
-}
-struct SidebarView: View {
-    // Binding values from parent view
-    @Binding var isSidebarVisible: Bool
-    @Binding var isDarkMode: Bool
-    @Binding var isNotificationsEnabled: Bool
-    @Binding var isLocationAccessGranted: Bool
-    @Binding var settings: [Setting]
-    
-    var body: some View {
-        VStack {
-            // Close button to hide sidebar
-            Button(action: {
-                withAnimation {
-                    isSidebarVisible = false
-                }
-            }) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding()
-            }
-            Text("Settings")
-                .font(.system(size:40))
-                .underline()
-            // Settings Section with Toggles
-            Form {
-                List($settings) { $setting in
-                    HStack{
-                        Text(setting.name)
-                        Toggle("Setting has been Changed", isOn: $setting.isContacted)
-                            .labelsHidden()
-                    }
-                }
-            }
-            .frame(maxWidth: 300, maxHeight: 500)
-            .background(Color.gray.opacity(0.8))
-            .cornerRadius(10)
-            .padding()
-        }
-        .frame(width: 300)
-        .background(Color.gray)
-        .cornerRadius(10)
-        .foregroundColor(.white)
-        .edgesIgnoringSafeArea(.vertical)
     }
 }
 
