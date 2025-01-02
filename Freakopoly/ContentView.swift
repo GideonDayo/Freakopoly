@@ -16,6 +16,9 @@ struct Setting: Identifiable {
 }
 
 struct ContentView: View {
+    
+    @StateObject var gm: GameManager = GameManager()
+
     @State private var startingCash: Int = 1500
     //player 1 data
     @State private var p1Name = "Player 1"
@@ -45,6 +48,17 @@ struct ContentView: View {
     
     var body: some View {
             VStack{
+                Button("test"){
+                    gm.landedOnComChest(playerNumber: 2)
+                }
+                .alert("Chance Card", isPresented: $gm.showAlert) {
+                    Button("OK") {
+                        
+                    }
+                } message: {
+                    Text(gm.alertMessage)
+                }
+
                 HStack{
                     
                     Text("Enter Cash Amount:")

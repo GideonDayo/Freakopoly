@@ -15,6 +15,11 @@ struct GameCreationView: View {
     @State private var goesToDetail: Bool = false
     @State var errorMessage: String = ""
     
+    @StateObject var gm: GameManager = GameManager()
+    
+    @State private var currentDate = Date.now
+        let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
     //sidebar
     @State private var isSidebarVisible = false
     @State private var isDarkMode = false
@@ -72,7 +77,7 @@ struct GameCreationView: View {
                     HStack{ //Buttons
                         Button { //Create game
                             let db = Firestore.firestore()
-                            let code = generateCode()
+                            let code = gm.generateCode()
                             let gameRoom = GameRoom(maxplayers: 4, playerCount: 1, id: code)
                             db.collection("Games").document("\(code)").setData(gameRoom.toDictionary()) {
                                 error in
@@ -87,6 +92,7 @@ struct GameCreationView: View {
                             Text("Create Game")
                         }
                         Button { //Join game
+                            print()
                             getDataFromFirebase { room in
                                 if(room != nil){
                                     goesToDetail = true
@@ -130,17 +136,8 @@ struct GameCreationView: View {
             completion(nil)
         }
     }
-    func generateCode() -> String{ //generates a random code containing all the variables in charset used for room code
-        let charset = ["1","2","3","4","5","6","7","8","9","0","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-        var result = ""
-        var random = 0
-        for i in 1 ... 5 {
-            random = Int.random(in: 0..<charset.count)
-            result += charset[random]
-        }
-    return result
-    }
 }
+
 struct SidebarView: View {
     // Binding values from parent view
     @Binding var isSidebarVisible: Bool

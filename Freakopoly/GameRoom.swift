@@ -13,8 +13,7 @@ class GameRoom: Identifiable{
     var playerCount: Int
     
 //    var player: [Player]
-    var playersTurn: Int = 0
-    var id: String // room code
+    var id: String
     init(maxplayers: Int, playerCount: Int, id: String){
         self.maxPlayers = maxplayers
         self.playerCount = playerCount
